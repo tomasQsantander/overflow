@@ -25,8 +25,8 @@ public class OverflowApplication {
 									  TagQuestionsRepository tagQuestionsRepository, TagRepository tagRepository
 									  ) {
 		return (args) -> {
-			Question q1 = new Question("Como se separa un string en Java?");
-			Question q2 = new Question("Como crear una clase?");
+			Question q1 = new Question("Java string", "Como se separa un string en Java?");
+			Question q2 = new Question("Clases java", "Como crear una clase?");
 
 			Tag t1 = new Tag("programacion");
 

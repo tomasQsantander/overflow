@@ -81,4 +81,9 @@ public class Question {
     public void setTagQuestionsSet(Set<TagQuestions> tagQuestionsSet) {
         this.tagQuestionsSet = tagQuestionsSet;
     }
+
+    public void addTag(TagQuestions tq) {
+        tq.setQuestion(this);
+        tagQuestionsSet.add(tq);
+    }
 }
