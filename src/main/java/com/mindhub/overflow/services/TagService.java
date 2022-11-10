@@ -1,5 +1,6 @@
 package com.mindhub.overflow.services;
 
+import com.mindhub.overflow.dtos.TagDTO;
 import com.mindhub.overflow.models.Tag;
 import com.mindhub.overflow.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class TagService {
     @Autowired
     TagRepository tagRepository;
 
-    public Set<Tag> getTags (){
-        return tagRepository.findAll().stream().collect(Collectors.toSet());
+    public Set<TagDTO> getTags (){
+        return tagRepository.findAll().stream().map(TagDTO::new).collect(Collectors.toSet());
     }
 }

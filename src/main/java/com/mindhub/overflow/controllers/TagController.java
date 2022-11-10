@@ -1,6 +1,6 @@
 package com.mindhub.overflow.controllers;
 
-import com.mindhub.overflow.dtos.QuestionDTO;
+import com.mindhub.overflow.dtos.TagDTO;
 import com.mindhub.overflow.models.Tag;
 import com.mindhub.overflow.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class TagController {
     TagService tagService;
 
     @GetMapping(value = "")
-    public Set<Tag> getTags (){
+    public Set<TagDTO> getTags (){
         return tagService.getTags();
     }
 
