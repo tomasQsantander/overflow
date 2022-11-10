@@ -1,16 +1,16 @@
 var app = new Vue({
     el:"#app",
     data:{
-        clientInfo: {},
+        questions: {},
         errorToats: null,
         errorMsg: null,
     },
     methods:{
         getData: function(){
-            axios.get("/api/clients/current")
+            axios.get("/api/questions")
             .then((response) => {
                 //get client ifo
-                this.clientInfo = response.data;
+                this.questions = response.data;
             })
             .catch((error)=>{
                 // handle error
@@ -21,14 +21,7 @@ var app = new Vue({
         formatDate: function(date){
             return new Date(date).toLocaleDateString('en-gb');
         },
-        signOut: function(){
-            axios.post('/api/logout')
-            .then(response => window.location.href="/web/index.html")
-            .catch(() =>{
-                this.errorMsg = "Sign out failed"   
-                this.errorToats.show();
-            })
-        },
+
         create: function(){
             axios.post('http://localhost:8080/api/clients/current/accounts')
             .then(response => window.location.reload())
@@ -36,8 +29,22 @@ var app = new Vue({
                 this.errorMsg = error.response.data;  
                 this.errorToats.show();
             })
+        },
+        searchByTag: function(){
+                    axios.post('http://localhost:8080/api/clients/current/accounts')
+                    .then(response => window.location.reload())
+                    .catch((error) =>{
+                        this.errorMsg = error.response.data;
+                        this.errorToats.show();
+                    })
+                },
+        tagsFormat: function(tags){
+            tags =  tags.map( tag => tag.subject);
+            //return tags.join(", ");
+            return tags;
         }
     },
+
     mounted: function(){
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.getData();

@@ -18,7 +18,7 @@
     margin: 0px;
 }
 
-.account-link{
+.question-link{
     text-decoration: none;
 }
 
@@ -44,8 +44,8 @@
 }
 
 .menu-logo{
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
 }
 
 .welcome{
