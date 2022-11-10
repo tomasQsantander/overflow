@@ -20,7 +20,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-
+    private String title;
     private String question;
 
     @CreatedDate
@@ -32,19 +32,28 @@ public class Question {
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     Set<TagQuestions> tagQuestionsSet = new HashSet<>();
 
-    public Question(String question, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Question(String title,String question) {
+        this.title = title;
         this.question = question;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Question() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getQuestion() {
         return question;
     }
-
     public void setQuestion(String question) {
         this.question = question;
     }
