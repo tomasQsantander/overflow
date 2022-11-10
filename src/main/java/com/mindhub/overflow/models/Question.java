@@ -32,6 +32,10 @@ public class Question {
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     Set<TagQuestions> tagQuestionsSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    Set<Answer> answers = new HashSet<>();
+
+
     public Question(String title,String question) {
         this.title = title;
         this.question = question;
@@ -85,5 +89,18 @@ public class Question {
     public void addTag(TagQuestions tq) {
         tq.setQuestion(this);
         tagQuestionsSet.add(tq);
+    }
+
+    public void addAnswer(Answer answer) {
+        answer.setQuestion(this);
+        answers.add(answer);
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
     }
 }

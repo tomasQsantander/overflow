@@ -25,10 +25,9 @@ public class AnswerController {
     private MessageSource messages;
 
     @PostMapping(value = "/new")
-    public ResponseEntity<Object> addQuestion (@RequestParam @NotBlank String title, @RequestParam @NotBlank String question,
-                                               @RequestParam @NotBlank String tags){
+    public ResponseEntity<Object> addQuestion (@RequestParam Long questionId, @RequestParam @NotBlank String answer){
 
-        ResponseUtils res = answerService.addAnswer(title, question, tags);
+        ResponseUtils res = answerService.addAnswer(questionId, answer);
 
         if (res.getDone()){
             return new ResponseEntity<>(
@@ -40,4 +39,22 @@ public class AnswerController {
                 messages.getMessage(res.getMessage(), (Object[]) res.getArgs(), LocaleContextHolder.getLocale()),
                 HttpStatus.valueOf(res.getStatusCode()));
     }
+
+    @PostMapping(value = "/vote")
+    public ResponseEntity<Object> addVote (@RequestParam Long answerId, @RequestParam Integer vote){
+
+        ResponseUtils res = answerService.addVote(answerId, vote);
+
+        if (res.getDone()){
+            return new ResponseEntity<>(
+                    messages.getMessage(res.getMessage(), null, LocaleContextHolder.getLocale()),
+                    HttpStatus.valueOf(res.getStatusCode()));
+        }
+
+        return new ResponseEntity<>(
+                messages.getMessage(res.getMessage(), (Object[]) res.getArgs(), LocaleContextHolder.getLocale()),
+                HttpStatus.valueOf(res.getStatusCode()));
+    }
+
+
 }

@@ -14,6 +14,7 @@ public class QuestionDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<TagWOQuestionDTO> tags = new ArrayList<>();
+    private List<AnswerDTO> answers = new ArrayList<>();
 
     public QuestionDTO() {
     }
@@ -25,6 +26,7 @@ public class QuestionDTO {
         this.createdAt = question.getCreatedAt();
         this.updatedAt = question.getUpdatedAt();
         this.tags = question.getTagQuestionsSet().stream().map(tagQuestions -> new TagWOQuestionDTO(tagQuestions.getTag())).collect(Collectors.toList());
+        this.answers = question.getAnswers().stream().map(AnswerDTO::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -49,5 +51,9 @@ public class QuestionDTO {
 
     public List<TagWOQuestionDTO> getTags() {
         return tags;
+    }
+
+    public List<AnswerDTO> getAnswers() {
+        return answers;
     }
 }

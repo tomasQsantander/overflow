@@ -23,19 +23,8 @@ public class TagWOQuestionDTO {
         this.updatedAt = tag.getUpdatedAt();
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getSubject() {
         return subject;
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDate getUpdatedAt() {
-        return updatedAt;
-    }
 }
