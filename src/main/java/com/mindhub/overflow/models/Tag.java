@@ -4,6 +4,7 @@ import net.bytebuddy.asm.Advice;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Tag {
 
     @Id
@@ -31,6 +33,9 @@ public class Tag {
 
     public Tag(String subject) {
         this.subject = subject;
+    }
+
+    public Tag() {
     }
 
     public Long getId() {

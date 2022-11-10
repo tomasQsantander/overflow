@@ -1,5 +1,6 @@
 package com.mindhub.overflow.services;
 
+import com.mindhub.overflow.dtos.QuestionDTO;
 import com.mindhub.overflow.models.Question;
 import com.mindhub.overflow.models.Tag;
 import com.mindhub.overflow.models.TagQuestions;
@@ -35,8 +36,8 @@ public class QuestionService {
     private String[] tagsArray;
 
 
-    public Set<Question> getQuestions() {
-        return questionRepository.findAll().stream().collect(Collectors.toSet());
+    public Set<QuestionDTO> getQuestions() {
+        return questionRepository.findAll().stream().map(QuestionDTO::new).collect(Collectors.toSet());
     }
 
     public ResponseUtils addQuestion(String title, String question, String tags) {
@@ -57,18 +58,15 @@ public class QuestionService {
             tagSet.add(tag);
         }
 
+
         Question newQuestion = new Question(title, question);
+        questionRepository.save(newQuestion);
+
         for (Tag t : tagSet){
             TagQuestions tagQuestions = new TagQuestions(t, newQuestion);
-            newQuestion.addTag(tagQuestions);
+            //newQuestion.addTag(tagQuestions);
+            tagQuestionsRepository.save(tagQuestions);
         }
-
-
-
-
-
-
-
 
         //agregar
         return responseUtils;
