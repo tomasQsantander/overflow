@@ -23,7 +23,8 @@ public class TagDTO {
         this.subject = tag.getSubject();
         this.createdAt = tag.getCreatedAt();
         this.updatedAt = tag.getUpdatedAt();
-        this.questions = tag.getTagQuestions().stream().map( questions -> new TagQuestionsQDTO( new TagQuestions( tag,questions.getQuestion()) )).collect(Collectors.toSet());
+        //this.questions = tag.getTagQuestions().stream().map( questions -> new TagQuestionsQDTO( new TagQuestions( tag,questions.getQuestion()) )).collect(Collectors.toSet());
+        this.questions = tag.getTagQuestions().stream().map(TagQuestionsQDTO::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
