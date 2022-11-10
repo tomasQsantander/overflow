@@ -1,30 +1,25 @@
 package com.mindhub.overflow.dtos;
 
 import com.mindhub.overflow.models.Question;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class QuestionDTO {
+import java.time.LocalDateTime;
+
+public class QuestionWOTagDTO {
 
     private Long id;
     private String title;
     private String question;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<TagWOQuestionDTO> tags = new ArrayList<>();
 
-    public QuestionDTO() {
+    public QuestionWOTagDTO() {
     }
-
-    public QuestionDTO(Question question) {
+    public QuestionWOTagDTO(Question question) {
         this.id = question.getId();
         this.title = question.getTitle();
         this.question = question.getQuestion();
         this.createdAt = question.getCreatedAt();
         this.updatedAt = question.getUpdatedAt();
-        this.tags = question.getTagQuestionsSet().stream().map(tagQuestions -> new TagWOQuestionDTO(tagQuestions.getTag())).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -45,9 +40,5 @@ public class QuestionDTO {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public List<TagWOQuestionDTO> getTags() {
-        return tags;
     }
 }
