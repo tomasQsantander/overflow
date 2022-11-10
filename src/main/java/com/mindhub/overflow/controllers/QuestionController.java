@@ -29,9 +29,15 @@ public class QuestionController {
     @Autowired
     private MessageSource messages;
 
+
     @GetMapping(value = "")
     public Set<QuestionDTO> getQuestions (){
         return questionService.getQuestions();
+    }
+
+    @GetMapping(value = "/{id}")
+    public Question getQuestionById (@PathVariable Long id){
+        return questionService.getQuestionById(id);
     }
 
     @PostMapping(value = "/new")
