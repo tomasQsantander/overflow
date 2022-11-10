@@ -41,8 +41,8 @@ public class QuestionService {
         return questionRepository.findAll().stream().map(QuestionDTO::new).collect(Collectors.toSet());
     }
 
-    public Question getQuestionById (Long id){
-        return questionRepository.findById(id).orElse(null);
+    public QuestionDTO getQuestionById (Long id){
+        return questionRepository.findById(id).map(QuestionDTO::new).orElse(null);
     }
 
     public ResponseUtils addQuestion(String title, String question, String tags) {

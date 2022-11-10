@@ -1,5 +1,6 @@
 package com.mindhub.overflow.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,12 +25,16 @@ public class Answer {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @JoinColumn(name = "question_id")
-    private Integer question;
+    private Integer votes = 0;
 
-    public Answer(String text, Integer question) {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+
+
+    public Answer(String text) {
         this.text = text;
-        this.question = question;
     }
 
     public Answer() {
@@ -63,11 +68,20 @@ public class Answer {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getQuestion() {
+    @JsonIgnore
+    public Question getQuestion() {
         return question;
     }
 
-    public void setQuestion(Integer question) {
+    public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public Integer getVotes() {
+        return votes;
+    }
+
+    public void addVote(Integer vote){
+        votes += vote;
     }
 }
