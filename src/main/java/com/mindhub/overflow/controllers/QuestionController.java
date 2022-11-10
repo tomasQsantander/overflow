@@ -34,8 +34,10 @@ public class QuestionController {
     }
 
     @PostMapping(value = "/new")
-    public ResponseEntity<Object> addQuestion (@RequestParam @NotBlank String question, @RequestParam @NotBlank String tags){
-        ResponseUtils res = questionService.addQuestion(question, tags);
+    public ResponseEntity<Object> addQuestion (@RequestParam @NotBlank String title, @RequestParam @NotBlank String question,
+                                               @RequestParam @NotBlank String tags){
+
+        ResponseUtils res = questionService.addQuestion(title, question, tags);
 
         if (res.getDone()){
             return new ResponseEntity<>(
