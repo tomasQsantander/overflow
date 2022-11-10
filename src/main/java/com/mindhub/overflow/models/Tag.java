@@ -27,12 +27,14 @@ public class Tag {
     private LocalDate updatedAt;
 
     @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
-    Set<TagQuestions> tagQuestions = new HashSet<>();
+    private Set<TagQuestions> tagQuestions = new HashSet<>();
 
-    public Tag(String subject, LocalDate createdAt, LocalDate updatedAt) {
+    public Tag(String subject) {
         this.subject = subject;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getSubject() {
@@ -65,5 +67,10 @@ public class Tag {
 
     public void setTagQuestions(Set<TagQuestions> tagQuestions) {
         this.tagQuestions = tagQuestions;
+    }
+
+    public void addQuestion(TagQuestions tq) {
+        tq.setTag(this);
+        tagQuestions.add(tq);
     }
 }

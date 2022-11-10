@@ -28,10 +28,8 @@ public class Answers {
     @JoinColumn(name = "question_id")
     private Integer question;
 
-    public Answers(String text, LocalDateTime createdAt, LocalDateTime updatedAt, Integer question) {
+    public Answers(String text, Integer question) {
         this.text = text;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.question = question;
     }
 
