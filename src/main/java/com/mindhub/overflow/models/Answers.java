@@ -25,6 +25,7 @@ public class Answers {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @JoinColumn(name = "question_id")
     private Integer question;
 
     public Answers(String text, LocalDateTime createdAt, LocalDateTime updatedAt, Integer question) {
