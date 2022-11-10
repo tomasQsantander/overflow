@@ -1,5 +1,6 @@
 package com.mindhub.overflow.controllers;
 
+import com.mindhub.overflow.dtos.QuestionDTO;
 import com.mindhub.overflow.models.Question;
 import com.mindhub.overflow.repositories.QuestionRepository;
 import com.mindhub.overflow.services.QuestionService;
@@ -29,7 +30,7 @@ public class QuestionController {
     private MessageSource messages;
 
     @GetMapping(value = "")
-    public Set<Question> getQuestions (){
+    public Set<QuestionDTO> getQuestions (){
         return questionService.getQuestions();
     }
 
