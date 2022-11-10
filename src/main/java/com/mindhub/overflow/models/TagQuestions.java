@@ -48,4 +48,5 @@ public class TagQuestions {
     public void setQuestion(Question question) {
         this.question = question;
     }
+
 }
