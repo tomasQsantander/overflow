@@ -65,3 +65,15 @@
 .index-container{
     margin-top: 10%;
 }
+
+.sidebar{
+  height: fit-content !important;
+}
+.banner{
+    height:5rem
+}
+
+.card:hover{
+    cursor: pointer !important;
+    outline: #E59866 solid 0.1rem !important;
+}

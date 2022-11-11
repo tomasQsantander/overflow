@@ -4,6 +4,7 @@ var app = new Vue({
         questionInfo: {},
         errorToats: null,
         errorMsg: null,
+        user:{}
     },
     methods:{
         getData: function(){
@@ -12,6 +13,14 @@ var app = new Vue({
             axios.get(`/api/questions/${id}`)
                 .then((response) => {
                     this.questionInfo = response.data;
+                    axios.get("/api/current").then((response) => {
+                         //get user info
+                        this.user = response.data
+                        }).catch((error)=>{
+                              // handle error
+                              this.errorMsg = "Error getting data";
+                              this.errorToats.show();
+                          })
                 })
                 .catch((error) => {
                     // handle error

@@ -6,8 +6,19 @@ var app = new Vue({
         title:"",
         question:"",
         tags:""
+        user:{}
     },
     methods:{
+        getData: function(){
+            axios.get("/api/current").then((response) => {
+                 //get user info
+                this.user = response.data
+                }).catch((error)=>{
+                      // handle error
+                      this.errorMsg = "Error getting data";
+                      this.errorToats.show();
+                  })
+            },
         formatDate: function(date){
             return new Date(date).toLocaleDateString('en-gb');
         },
