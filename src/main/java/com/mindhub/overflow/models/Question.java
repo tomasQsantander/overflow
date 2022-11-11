@@ -30,10 +30,14 @@ public class Question {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-    Set<TagQuestions> tagQuestionsSet = new HashSet<>();
+    private Set<TagQuestions> tagQuestionsSet = new HashSet<>();
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-    Set<Answer> answers = new HashSet<>();
+    private Set<Answer> answers = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
 
     public Question(String title,String question) {
@@ -102,5 +106,13 @@ public class Question {
 
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

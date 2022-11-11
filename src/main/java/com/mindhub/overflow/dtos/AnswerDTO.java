@@ -14,6 +14,7 @@ public class AnswerDTO {
     private LocalDateTime updatedAt;
     private Integer votes;
 
+    private UsuarioDTO usuario;
     public AnswerDTO() {
     }
 
