@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -25,6 +27,14 @@ public class UsuarioService {
         return null;
     }
 
+
+    public List<UsuarioDTO> getUsersByRankingPoints(){
+        return usuarioRespository.findAllByOrderByRankingPointDesc().stream().map(UsuarioDTO::new).collect(Collectors.toList());
+    }
+
+    public List<UsuarioDTO> getTenUsersByRankingPoints(){
+        return usuarioRespository.findTop10AllByOrderByRankingPointDesc().stream().map(UsuarioDTO::new).collect(Collectors.toList());
+    }
 
     public ResponseUtils logIn(String email, HttpSession session){
         ResponseUtils res = new ResponseUtils(true, 200, "usuario.login.successful");
