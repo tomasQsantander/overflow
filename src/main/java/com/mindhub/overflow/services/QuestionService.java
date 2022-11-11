@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +40,7 @@ public class QuestionService {
 
     public Set<QuestionDTO> getQuestions() {
         return questionRepository.findAll().stream().map(QuestionDTO::new).collect(Collectors.toSet());
+                //.stream().sorted(Comparator.comparing(QuestionDTO::getCreatedAt)).collect(Collectors.toSet());
     }
 
     public QuestionDTO getQuestionById (Long id){

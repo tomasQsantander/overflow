@@ -26,18 +26,18 @@
         <div class="row mt-5">
             <div class="col-12 col-md-2">
                 <div class="bg-light">
-                    <a href="/web/accounts.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <a href="/web/questions.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <img class="menu-logo" src="img/overFlowIcon.svg">
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="/web/accounts.html" class="nav-link active">
+                            <a href="/web/questions.html" class="nav-link active">
                                 Questions
                             </a>
                         </li>
                         <li>
-                            <a href="/web/cards.html" class="nav-link link-dark">
+                            <a href="/web/tags.html" class="nav-link link-dark">
                                 Tags
                             </a>
                         </li>
@@ -66,15 +66,28 @@
                         <tr>
                             <th scope="col">id</th>
                             <th scope="col">Answer</th>
+                            <th scope="col">Votes</th>
+
                         </tr>
                         </thead>
                         <tbody >
                         <tr v-for=" answer in questionInfo.answers">
                             <th scope="row">{{ answer.id }}</th>
-                            <td>{{ answer.text }}</td>
+                            <td> {{ answer.text }} </td>
+                            <td class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                {{answer.votes}}
+                             <button v-on:click="vote(answer.id,1)" class="btn btn-success btn-sm" type="button">+</button>
+                             <button v-on:click="vote(answer.id,-1)"class="btn btn-danger btn-sm" type="button">-</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <a v-bind:href="'http://localhost:8080/web/create-answer.html?id='+ questionInfo.id" class="btn btn-sm btn-outline-success">New answer</a>
+                    </div>
                 </div>
         <!--
         Btn redireccion agregar respuestas aswers.html --- ahi submit con form para guardar respuestas y redirijo a questions
