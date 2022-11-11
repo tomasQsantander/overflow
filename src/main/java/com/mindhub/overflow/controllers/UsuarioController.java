@@ -37,7 +37,7 @@ public class UsuarioController {
         return usuarioService.getUsersByRankingPoints();
     }
 
-    @GetMapping(value = "/ranking/10")
+    @GetMapping(value = "/ranking/top")
     public List<UsuarioDTO> getTenUsersByRankingPoints(){
         return usuarioService.getTenUsersByRankingPoints();
     }
