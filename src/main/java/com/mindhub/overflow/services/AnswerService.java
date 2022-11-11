@@ -1,11 +1,9 @@
 package com.mindhub.overflow.services;
 
-import com.mindhub.overflow.models.Answer;
-import com.mindhub.overflow.models.Question;
-import com.mindhub.overflow.models.Tag;
-import com.mindhub.overflow.models.TagQuestions;
+import com.mindhub.overflow.models.*;
 import com.mindhub.overflow.repositories.AnswersRepository;
 import com.mindhub.overflow.repositories.QuestionRepository;
+import com.mindhub.overflow.repositories.UsuarioRespository;
 import com.mindhub.overflow.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,10 +21,13 @@ import java.util.Set;
 public class AnswerService {
 
     @Autowired
-    AnswersRepository answersRepository;
+    private AnswersRepository answersRepository;
 
     @Autowired
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
+    
+    @Autowired
+    private UsuarioRespository usuarioRespository;
 
     private Question question;
 
@@ -33,8 +35,10 @@ public class AnswerService {
 
     private Integer voteTruncated;
 
-    public ResponseUtils addAnswer(Long questionId, String answer) {
-        ResponseUtils responseUtils = validateAnswer(questionId, answer);
+    private Usuario usuario;
+
+    public ResponseUtils addAnswer(Long questionId, String answer, HttpSession session) {
+        ResponseUtils responseUtils = validateAnswer(questionId, session);
         if(!responseUtils.getDone()){
             return responseUtils;
         }
@@ -43,16 +47,34 @@ public class AnswerService {
         question.addAnswer(answer1);
         answersRepository.save(answer1);
         questionRepository.save(question);
+        
+        usuario.addAnswers(answer1);
+        usuario.addRankingPoint(1);
+        usuarioRespository.save(usuario);
 
         return responseUtils;
     }
 
-    private ResponseUtils validateAnswer(Long questionId, String answer){
+    private ResponseUtils validateAnswer(Long questionId, HttpSession session){
         ResponseUtils responseUtils = new ResponseUtils(true, 200, "answer.validation.success");
 
         question = questionRepository.findById(questionId).orElse(null);
+        
+        //La pregunta debe existir
         if (question == null){
             return new ResponseUtils(false, 400, "answer.validation.failure.questionMissing");
+        }
+
+        usuario = (Usuario) session.getAttribute("usuario");
+        
+        //EL usuario debe estar registrado en session
+        if (usuario == null){
+            return new ResponseUtils(false, 400, "answer.validation.failure.userMustLogin");
+        }
+        
+        //El usuario no puede responder su propia pregunta
+        if (question.getUsuario().getId().equals(usuario.getId())){
+            return new ResponseUtils(false, 400, "answer.validation.failure.sameUser");
         }
 
         return responseUtils;

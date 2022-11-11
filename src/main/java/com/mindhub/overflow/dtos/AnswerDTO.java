@@ -24,6 +24,7 @@ public class AnswerDTO {
         this.votes = answer.getVotes();
         this.createdAt = answer.getCreatedAt();
         this.updatedAt = answer.getUpdatedAt();
+        this.usuario = new UsuarioDTO(answer.getUsuario());
     }
 
     public Long getId() {
@@ -44,5 +45,9 @@ public class AnswerDTO {
 
     public Integer getVotes() {
         return votes;
+    }
+
+    public UsuarioDTO getUsuario() {
+        return usuario;
     }
 }

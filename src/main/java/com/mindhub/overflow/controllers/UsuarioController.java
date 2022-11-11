@@ -1,35 +1,39 @@
 package com.mindhub.overflow.controllers;
 
-import com.mindhub.overflow.services.AnswerService;
+import com.mindhub.overflow.dtos.UsuarioDTO;
+import com.mindhub.overflow.services.UsuarioService;
 import com.mindhub.overflow.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @RestController
-@RequestMapping("/api/answer")
-public class AnswerController {
+@Validated
+@RequestMapping("/api")
+public class UsuarioController {
 
     @Autowired
-    AnswerService answerService;
+    private UsuarioService usuarioService;
 
     @Autowired
     private MessageSource messages;
 
-    @PostMapping(value = "/new")
-    public ResponseEntity<Object> addQuestion (@RequestParam Long questionId, @RequestParam @NotBlank String answer,
-                                               HttpSession session){
+    @GetMapping(value = "/current")
+    public UsuarioDTO getCurrentUser(HttpSession session){
+        return usuarioService.getCurrentUser(session);
+    }
 
-        ResponseUtils res = answerService.addAnswer(questionId, answer, session);
+    @PostMapping(value = "/login")
+    public ResponseEntity<Object> logIn(@RequestParam @NotBlank @Email String email, HttpSession session){
+        ResponseUtils res = usuarioService.logIn(email, session);
 
         if (res.getDone()){
             return new ResponseEntity<>(
@@ -42,10 +46,11 @@ public class AnswerController {
                 HttpStatus.valueOf(res.getStatusCode()));
     }
 
-    @PostMapping(value = "/vote")
-    public ResponseEntity<Object> addVote (@RequestParam Long answerId, @RequestParam Integer vote){
+    @PostMapping(value = "/register")
+    public ResponseEntity<Object> register(@RequestParam @NotBlank String name, @RequestParam @NotBlank String lastName,
+                                           @RequestParam @NotBlank @Email String email, HttpSession session){
 
-        ResponseUtils res = answerService.addVote(answerId, vote);
+        ResponseUtils res = usuarioService.register(name, lastName, email, session);
 
         if (res.getDone()){
             return new ResponseEntity<>(
@@ -56,7 +61,6 @@ public class AnswerController {
         return new ResponseEntity<>(
                 messages.getMessage(res.getMessage(), (Object[]) res.getArgs(), LocaleContextHolder.getLocale()),
                 HttpStatus.valueOf(res.getStatusCode()));
+
     }
-
-
 }
