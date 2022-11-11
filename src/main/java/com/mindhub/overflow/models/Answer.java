@@ -31,7 +31,9 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public Answer(String text) {
         this.text = text;
@@ -81,7 +83,15 @@ public class Answer {
         return votes;
     }
 
-    public void addVote(Integer vote){
+    public void addVote(Integer vote) {
         votes += vote;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

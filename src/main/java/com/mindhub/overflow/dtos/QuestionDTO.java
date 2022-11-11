@@ -1,6 +1,8 @@
 package com.mindhub.overflow.dtos;
 
 import com.mindhub.overflow.models.Question;
+import com.mindhub.overflow.models.Usuario;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ public class QuestionDTO {
     private List<TagWOQuestionDTO> tags = new ArrayList<>();
     private List<AnswerDTO> answers = new ArrayList<>();
 
+    private UsuarioDTO usuario;
+
     public QuestionDTO() {
     }
 
@@ -27,6 +31,7 @@ public class QuestionDTO {
         this.updatedAt = question.getUpdatedAt();
         this.tags = question.getTagQuestionsSet().stream().map(tagQuestions -> new TagWOQuestionDTO(tagQuestions.getTag())).collect(Collectors.toList());
         this.answers = question.getAnswers().stream().map(AnswerDTO::new).collect(Collectors.toList());
+        this.usuario = new UsuarioDTO(question.getUsuario());
     }
 
     public Long getId() {
@@ -55,5 +60,9 @@ public class QuestionDTO {
 
     public List<AnswerDTO> getAnswers() {
         return answers;
+    }
+
+    public UsuarioDTO getUsuario() {
+        return usuario;
     }
 }
