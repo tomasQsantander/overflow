@@ -1,12 +1,15 @@
 package com.mindhub.overflow.services;
 
 import com.mindhub.overflow.dtos.QuestionDTO;
+import com.mindhub.overflow.dtos.UsuarioDTO;
 import com.mindhub.overflow.models.Question;
 import com.mindhub.overflow.models.Tag;
 import com.mindhub.overflow.models.TagQuestions;
+import com.mindhub.overflow.models.Usuario;
 import com.mindhub.overflow.repositories.QuestionRepository;
 import com.mindhub.overflow.repositories.TagQuestionsRepository;
 import com.mindhub.overflow.repositories.TagRepository;
+import com.mindhub.overflow.repositories.UsuarioRespository;
 import com.mindhub.overflow.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,9 +38,13 @@ public class QuestionService {
 
     @Autowired
     private TagQuestionsRepository tagQuestionsRepository;
+    
+    @Autowired
+    private UsuarioRespository usuarioRespository;
 
     private String[] tagsArray;
 
+    private Usuario usuario;
 
     public Set<QuestionDTO> getQuestions() {
         return questionRepository.findAll().stream().map(QuestionDTO::new).collect(Collectors.toSet());
@@ -47,8 +55,8 @@ public class QuestionService {
         return questionRepository.findById(id).map(QuestionDTO::new).orElse(null);
     }
 
-    public ResponseUtils addQuestion(String title, String question, String tags) {
-        ResponseUtils responseUtils = validateQuestion(title, question, tags);
+    public ResponseUtils addQuestion(String title, String question, String tags, HttpSession session) {
+        ResponseUtils responseUtils = validateQuestion(title, question, tags, session);
         if(!responseUtils.getDone()){
             return responseUtils;
         }
@@ -74,14 +82,22 @@ public class QuestionService {
             //newQuestion.addTag(tagQuestions);
             tagQuestionsRepository.save(tagQuestions);
         }
-
-        //agregar
+        
+        usuario.addQuestions(newQuestion);
+        usuarioRespository.save(usuario);
+        
         return responseUtils;
     }
 
-    private ResponseUtils validateQuestion(String title, String question, String tags){
+    private ResponseUtils validateQuestion(String title, String question, String tags, HttpSession session){
         ResponseUtils responseUtils = new ResponseUtils(true, 200, "question.validation.success");
 
+        usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null){
+            return new ResponseUtils(false, 400, "answer.validation.failure.userMustLogin");
+        }
+        
+        
         tagsArray = tags.split(",");
 
         if (tagsArray.length > MAX_TAGS){

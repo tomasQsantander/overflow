@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
@@ -42,9 +43,9 @@ public class QuestionController {
 
     @PostMapping(value = "/new")
     public ResponseEntity<Object> addQuestion (@RequestParam @NotBlank String title, @RequestParam @NotBlank String question,
-                                               @RequestParam @NotBlank String tags){
+                                               @RequestParam @NotBlank String tags, HttpSession session){
 
-        ResponseUtils res = questionService.addQuestion(title, question, tags);
+        ResponseUtils res = questionService.addQuestion(title, question, tags, session);
 
         if (res.getDone()){
             return new ResponseEntity<>(

@@ -60,6 +60,10 @@ public class Usuario {
         return questions;
     }
 
+    public void addRankingPoint(Integer rankingPoint){
+        this.rankingPoint += rankingPoint;
+    }
+
     public void addQuestions(Question question) {
        question.setUsuario(this);
        questions.add(question);
