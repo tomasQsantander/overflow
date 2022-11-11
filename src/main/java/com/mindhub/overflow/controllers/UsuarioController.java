@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @RestController
 @Validated
@@ -29,6 +30,16 @@ public class UsuarioController {
     @GetMapping(value = "/current")
     public UsuarioDTO getCurrentUser(HttpSession session){
         return usuarioService.getCurrentUser(session);
+    }
+
+    @GetMapping(value = "/ranking")
+    public List<UsuarioDTO> getUsersByRankingPoints(){
+        return usuarioService.getUsersByRankingPoints();
+    }
+
+    @GetMapping(value = "/ranking/10")
+    public List<UsuarioDTO> getTenUsersByRankingPoints(){
+        return usuarioService.getTenUsersByRankingPoints();
     }
 
     @PostMapping(value = "/login")

@@ -36,6 +36,13 @@ public class OverflowApplication {
 			usuario.addQuestions(q2);
 			usuario.addAnswers(a1);
 
+			for (int i = 0; i<15; i++){
+				Usuario user = new Usuario("usuario" + i, "user", "usuario" + i + "@gmail.com");
+				if (i%2 == 0) {
+					user.addRankingPoint(1);
+				}
+				usuarioRespository.save(user);
+			}
 			usuarioRespository.save(usuario);
 			questionRepository.save(q1);
 			questionRepository.save(q2);
