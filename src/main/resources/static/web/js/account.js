@@ -11,9 +11,18 @@ var app = new Vue({
             const id = urlParams.get('id');
             axios.get(`/api/questions/${id}`)
                 .then((response) => {
-                    //get client ifo
                     this.questionInfo = response.data;
-                    //this.accountInfo.transactions.sort((a,b) => parseInt(b.id - a.id))
+                })
+                .catch((error) => {
+                    // handle error
+                    this.errorMsg = "Error getting data";
+                    this.errorToats.show();
+                })
+        },
+        vote: function(answerId, vote){
+            axios.post('/api/answer/vote', `answerId=${answerId}&vote=${vote}`)
+                .then((response) => {
+                    window.location.reload();
                 })
                 .catch((error) => {
                     // handle error
