@@ -5,7 +5,7 @@ var app = new Vue({
         errorMsg: null,
         title:"",
         question:"",
-        tags:""
+        tags:"",
         user:{}
     },
     methods:{

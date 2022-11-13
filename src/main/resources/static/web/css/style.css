@@ -1,3 +1,7 @@
+*{
+    font-family: 'Assistant', sans-serif;
+}
+
 .account{
     background: linear-gradient(45deg,#ee0979,#ff6a00);
     color: white;
@@ -70,10 +74,42 @@
   height: fit-content !important;
 }
 .banner{
-    height:5rem
+    height:5rem;
+    background: rgb(130,130,130);
+    background: radial-gradient(circle, rgba(130,130,130,1) 0%, rgba(47,47,47,1) 100%);
 }
 
-.card:hover{
-    cursor: pointer !important;
-    outline: #E59866 solid 0.1rem !important;
+.wobble-hor-bottom:hover {
+	animation: wobble-hor-bottom 0.8s both;
 }
+.cardQuestion:hover {
+	outline: black solid 0.1rem;
+}
+.tagPointer:hover{
+    cursor: pointer;
+}
+
+/* KEYFRAMES*/
+@keyframes wobble-hor-bottom {
+  0%,
+  100% {
+    transform: translateX(0%);
+    transform-origin: 50% 50%;
+  }
+  15% {
+    transform: translateX(-30px) rotate(-6deg);
+  }
+  30% {
+    transform: translateX(15px) rotate(6deg);
+  }
+  45% {
+    transform: translateX(-15px) rotate(-3.6deg);
+  }
+  60% {
+    transform: translateX(9px) rotate(2.4deg);
+  }
+  75% {
+    transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
+
