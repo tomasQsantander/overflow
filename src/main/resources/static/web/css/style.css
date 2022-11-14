@@ -81,6 +81,7 @@
 
 .wobble-hor-bottom:hover {
 	animation: wobble-hor-bottom 0.8s both;
+	cursor:pointer;
 }
 .cardQuestion:hover {
 	outline: black solid 0.1rem;
